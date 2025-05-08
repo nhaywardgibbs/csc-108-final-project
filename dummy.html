@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Hillman University's Event Page</title>
+    <link rel="stylesheet" href="dummy.css">
+</head>
+<body>
+    <div id="main-title">
+        <h1>Hillman University's Event Page!</h1>
+      </div>
+      <!-- Place this near your login form -->
+<div id="login-image-container">
+    <img src="./images final project/hillmanchat.png" alt="Hillman University" id="login-image">
+</div>
+              <div class="container">
+          <!-- Left Section: Login and Register Form Section -->
+          <div class="login" id="login">
+              <h2 id="login-header">Login</h2>
+              <form id="login-form" action="/login" method="POST">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password"required>                
+                  <div id="role-box" class="visible">
+                      <select id="role" required>
+                          <option value="student">Student</option>
+                          <option value="faculty">Faculty</option>
+                          <option value="admin">Admin</option>
+                      </select>
+                  </div>
+                  <div id="success-code">You are successfully authenticated!</div>
+                  <button type="submit" id="submit-btn"> Login</button>
+                  
+                  <!-- <p class="toggle-link" id="toggle-link">Don't have an account? <a href="javascript:void(0);" onclick="toggleForm()">Register</a></p> -->
+                </form>
+          </div>
+      
+          <!-- Submit Event Form -->
+          <div class="eventsubmission-box" id="eventsubmission-box">
+              <h2>Submit Event</h2>
+              <form id="event-form" action="/upload" method="POST" enctype="multipart/form-data">
+                  <input type="text" name="event-name" id="event-name" placeholder="Event Name" required>
+                  <input type="text" name="event-date" id="event-date" placeholder="Event Date" required>
+                  <input type="text" name="event-location" id="event-location" placeholder="Location" required>
+                  <select name="event-category" id="event-category" required>
+                    <option value="">Select Category</option>
+                    <option value="social">Social</option>
+                    <option value="conference">Conference</option>
+                    <option value="sports">Sports</option>
+                    <option value="other">Other</option>
+                </select>                
+                  <input type="text" name="event-host" id="event-host" placeholder="Host Info" required>
+                  <input type="number" name="event-seats" id="event-seats" placeholder="Seats" required>
+                  <textarea name="event-description" id="event-description" placeholder="Event Description" required></textarea>
+                  <!-- <input type="image" name="event-image" id="event-image" placeholder="Event Image" required> -->
+                  
+                  <input type="file" id="event-image" name="event-image" accept="image/*">
+                  <img id="preview" style="max-width: 200px; display: none;" />
+                  <button type="submit" id="submit-event">Submit Event</button>
+              </form>
+          </div>
+      </div>
+
+          <!-- Approval Process Section                -->
+          <div class="approvalForm">
+              <h1>Event Status</h1>
+              <form id="approval-form" action="/approve-event" method="POST">
+                <div id="populateEvent">
+                    <label for="populateEvent"> Select Event </label>
+                    <select id="events-list" name="events-list" required>
+                    </select>
+                </div>  
+                <div class="approval-action">
+                      <label for="approval-status"> Select Status (admin only)</label>
+                      <select id="approval-status" name="approval-status" required>
+                          <option value="approved">Approve</option>
+                          <option value="rejected">Reject</option>
+                      </select>
+                  </div>
+                  <div class="feedback-box">
+                    <br>
+                  </div>
+                  <button type="submit" id="approve-event"> Approve </button>
+                  <button type="submit" id="reject-event">Reject</button>
+              </form>
+          </div>
+<!--          - only avaiable for admins or faculty
+       - once approved they are visible for students too
+       - feedback will be visible for students -->
+
+
+<!--   put this at the bottom of the page       <div class="footer">
+            <p>&copy; 2025 Hillman University. All rights reserved.</p>
+        </div>-->
+
+        <div class ="upcomingevents-box" id ="upcomingevents-box">
+            <h2>Upcoming Events</h2>
+        <!-- Search Box Added Here -->
+        <div class="search-container">
+            <input type="text" id="event-search" placeholder="Search events...">
+            <select id="event-filter" required>
+                <option value="all">All Categories</option>
+                <option value="social">Social</option>
+                <option value="conference">Conference</option>
+                <option value="sports">Sports</option>
+                <option value="other">Other</option>
+                <!-- Add other categories as needed -->
+            </select>
+            <button type="button" id="searchButton"> Search </button>
+            <!-- <button type="registerButton" id="register-btn"> Register</button> -->
+        </div>
+
+        <div class="event-list" id="event-list"></div>
+        <div id="rejectedevents-box" style="display:none;">
+            <h2>Rejected Events</h2>
+            <div id="rejected-list"></div>
+          </div>
+          
+            <!-- Registration Modal -->
+          <div id="registration-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modal-event-title"></h2>
+                <div id="modal-event-details"></div>
+                <div id="modal-description"> </div>
+                <form id="registration-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- attendance check in -->
+    <div id="checkinmodal" class="checkin-box">
+        <div class="checkin">
+        <span class="closemodal2">&times;</span>
+        <form id="checkin-form" action="/checkin-event" method="POST">
+            <div id="populateCheckIn">
+            <h2>Checking in?</h2>
+            <label for="checkinevents-list">Select An Event</label>
+            <select id="checkinevents-list" name="events-list" required>
+            </select>
+            </div>
+            <input type="text" id="username-input" placeholder="username" required>
+            <input type="email" id="useremail-input" placeholder="email" required>
+            <button type="submit" id="checkin-btn">Check In!</button>
+        </form>
+        <p id="success-message" style="color: rgb(128, 0, 100);"></p>
+        </div>
+    </div>
+  
+
+
+<!-- feedback box -->
+<div id="feedback" class="feedback">
+    <div class="eventfeedback">
+        <form id="eventfeedback">
+            <h2>Give Us Feedback! <3 </h2>
+            Rate Us!
+            <div class="rating-container">
+                <div class="star-rating">
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label for="star1" title="1 star">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label for="star2" title="2 stars">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label for="star3" title="3 stars">★</label>
+
+                </div>
+            </div>
+            <input type="text" id="feedback-name" placeholder="Name" required />
+            <br>
+            <textarea id="feedback-text" name="feedback" placeholder="Event Feedback" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+    <!-- Event Reminders -->
+    <div id="event-reminders" class="reminder-box">
+        <h2>Event Reminders</h2>
+        <h3> enter an event to get a reminder</h3>
+        <ul id="reminder-list">
+            <!-- Countdown items go here -->
+        </ul>
+    </div>
+
+
+</div> <!-- closing .container -->
+
+<footer class="footer">
+    <p>&copy; 2025 Hillman University. All rights reserved.</p>
+</footer>
+            <!-- JavaScript -->
+<script src="dummy.js"></script>
+</body>
+</html>
+
